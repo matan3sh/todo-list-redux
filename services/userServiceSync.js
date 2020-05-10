@@ -18,11 +18,10 @@ function _createUser() {
 }
 
 function query() {
-  return Promise.resolve(gUser);
+  return gUser;
 }
 
 function update(user) {
   gUser = user;
   storageService.store(KEY, gUser);
-  return Promise.resolve(user);
 }

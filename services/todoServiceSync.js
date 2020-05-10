@@ -18,14 +18,13 @@ function _createTodos() {
 }
 
 function query() {
-  return Promise.resolve(gTodos);
+  return gTodos;
 }
 
 function remove(id) {
   const idx = gTodos.findIndex((todo) => todo._id === id);
   gTodos.splice(idx, 1);
   storageService.store(KEY, gTodos);
-  return Promise.resolve();
 }
 
 function save(todo) {
@@ -38,7 +37,6 @@ function save(todo) {
     gTodos.unshift(todo);
   }
   storageService.store(KEY, gTodos);
-  return Promise.resolve(todo);
 }
 
 function _makeId(length = 6) {

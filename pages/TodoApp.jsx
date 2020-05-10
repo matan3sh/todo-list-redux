@@ -1,7 +1,7 @@
 import {
   loadTodos,
   removeTodo,
-  updateTodo,
+  saveTodo,
   setTodo,
   showDone,
   showAll,
@@ -21,8 +21,8 @@ class TodoApp extends React.Component {
   state = { setCurr: false };
 
   componentDidMount() {
-    this.props.loadTodos();
     this.props.loadUser();
+    this.props.loadTodos();
   }
 
   onDelete = (todoId) => {
@@ -38,7 +38,7 @@ class TodoApp extends React.Component {
 
   onSetDone = (todo) => {
     todo.isDone = !todo.isDone;
-    this.props.updateTodo(todo);
+    this.props.saveTodo(todo);
   };
 
   onSetCurrent = (todo) => {
@@ -104,7 +104,7 @@ const mapDispatchToProps = {
   removeTodo,
   updateUser,
   setTodo,
-  updateTodo,
+  saveTodo,
   showDone,
   showAll,
   showActive,

@@ -1,6 +1,6 @@
 const { connect } = ReactRedux;
 
-import { updateTodo } from '../../store/actions/TodoActions.js';
+import { saveTodo } from '../../store/actions/TodoActions.js';
 
 class TodoEdit extends React.Component {
   state = {
@@ -16,7 +16,7 @@ class TodoEdit extends React.Component {
 
   onSumbit = (e) => {
     e.preventDefault();
-    this.props.updateTodo(this.state);
+    this.props.saveTodo(this.state);
     this.props.onSetCurrent();
     this.setState({ title: '' });
   };
@@ -51,7 +51,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  updateTodo,
+  saveTodo,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoEdit);
