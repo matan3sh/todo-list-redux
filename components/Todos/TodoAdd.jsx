@@ -1,9 +1,6 @@
-import todoService from '../../services/todoService.js';
-import userService from '../../services/userService.js';
-
 const { connect } = ReactRedux;
 
-import { saveTodo, updateUser } from '../../actions/TodoActions.js';
+import { saveTodo, updateUser } from '../../store/actions/TodoActions.js';
 
 class TodoAdd extends React.Component {
   state = {
@@ -25,8 +22,6 @@ class TodoAdd extends React.Component {
     };
     this.props.saveTodo(this.state);
     this.props.updateUser(user);
-    todoService.save(this.state);
-    userService.update(user);
     this.setState({ title: '' });
   };
 
@@ -55,16 +50,13 @@ class TodoAdd extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    todo: state.currTodo,
     user: state.user,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    saveTodo: (todo) => dispatch(saveTodo(todo)),
-    updateUser: (user) => dispatch(updateUser(user)),
-  };
+const mapDispatchToProps = {
+  saveTodo,
+  updateUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoAdd);

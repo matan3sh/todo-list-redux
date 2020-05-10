@@ -1,13 +1,10 @@
 import { App } from './App.jsx';
-import TodoReducer from './reducers/TodoReducer.js';
+import { store } from './store/store.js';
 
 const Router = ReactRouterDOM.HashRouter;
 const history = History.createHashHistory();
 
-const { createStore } = Redux;
 const { Provider } = ReactRedux;
-
-let store = createStore(TodoReducer);
 
 ReactDOM.render(
   <Provider store={store}>

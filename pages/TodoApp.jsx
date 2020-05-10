@@ -1,16 +1,14 @@
 import {
-  setTodos,
+  loadTodos,
   removeTodo,
   updateTodo,
   setTodo,
   showDone,
   showAll,
   showActive,
-  setUser,
+  loadUser,
   updateUser,
-} from '../actions/TodoActions.js';
-import todoService from '../services/todoService.js';
-import userService from '../services/userService.js';
+} from '../store/actions/TodoActions.js';
 import TodoList from '../components/Todos/TodoList.jsx';
 import TodoAdd from '../components/Todos/TodoAdd.jsx';
 import TodoEdit from '../components/Todos/TodoEdit.jsx';
@@ -23,19 +21,9 @@ class TodoApp extends React.Component {
   state = { setCurr: false };
 
   componentDidMount() {
-    this.loadUser();
-    this.loadTodos();
+    this.props.loadTodos();
+    this.props.loadUser();
   }
-
-  loadTodos = () => {
-    const todos = todoService.query();
-    this.props.setTodos(todos);
-  };
-
-  loadUser = () => {
-    const user = userService.query();
-    this.props.setUser(user);
-  };
 
   onDelete = (todoId) => {
     let newActivity = { txt: 'Removed a Todo', at: Date.now() };
@@ -44,15 +32,12 @@ class TodoApp extends React.Component {
       activitis: [newActivity, ...this.props.user.activitis],
       prefs: this.props.user.prefs,
     };
-    todoService.remove(todoId);
-    userService.update(user);
     this.props.removeTodo(todoId);
     this.props.updateUser(user);
   };
 
   onSetDone = (todo) => {
     todo.isDone = !todo.isDone;
-    todoService.save(todo);
     this.props.updateTodo(todo);
   };
 
@@ -113,18 +98,16 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setTodos: (todos) => dispatch(setTodos(todos)),
-    removeTodo: (todoId) => dispatch(removeTodo(todoId)),
-    updateTodo: (todo) => dispatch(updateTodo(todo)),
-    setTodo: (todo) => dispatch(setTodo(todo)),
-    showDone: () => dispatch(showDone()),
-    showAll: () => dispatch(showAll()),
-    showActive: () => dispatch(showActive()),
-    setUser: (user) => dispatch(setUser(user)),
-    updateUser: (user) => dispatch(updateUser(user)),
-  };
+const mapDispatchToProps = {
+  loadTodos,
+  loadUser,
+  removeTodo,
+  updateUser,
+  setTodo,
+  updateTodo,
+  showDone,
+  showAll,
+  showActive,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoApp);

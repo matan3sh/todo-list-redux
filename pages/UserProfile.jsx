@@ -1,5 +1,4 @@
-import userService from '../services/userService.js';
-import { updateUser } from '../actions/TodoActions.js';
+import { updateUser } from '../store/actions/TodoActions.js';
 
 const { connect } = ReactRedux;
 
@@ -30,7 +29,6 @@ class UserProfile extends React.Component {
       prefs: { color, bgColor },
     };
     this.props.updateUser(user);
-    userService.update(user);
   };
 
   render() {
@@ -89,8 +87,7 @@ class UserProfile extends React.Component {
                     <div key={index} className='text-left created-at'>
                       <i className='fas fa-check-square'></i>{' '}
                       <span style={{ fontWeight: 'bolder' }}>{todo.txt}</span>{' '}
-                      last added at{' '}
-                      <span>{new Date(todo.at).toDateString()}</span>
+                      at <span>{new Date(todo.at).toDateString()}</span>
                     </div>
                   ))
                 : ''}
@@ -108,10 +105,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateUser: (userFullName) => dispatch(updateUser(userFullName)),
-  };
+const mapDispatchToProps = {
+  updateUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

@@ -1,4 +1,4 @@
-import { searchTodo } from '../../actions/TodoActions.js';
+import { searchTodo } from '../../store/actions/TodoActions.js';
 
 const { connect } = ReactRedux;
 
@@ -50,10 +50,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    searchTodo: (txt) => dispatch(searchTodo(txt)),
-  };
+const mapDispatchToProps = {
+  searchTodo,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoSearch);

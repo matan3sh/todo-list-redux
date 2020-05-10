@@ -1,10 +1,8 @@
-import todoService from '../../services/todoService.js';
-
 const { connect } = ReactRedux;
 
-import { updateTodo } from '../../actions/TodoActions.js';
+import { updateTodo } from '../../store/actions/TodoActions.js';
 
-class TodoForm extends React.Component {
+class TodoEdit extends React.Component {
   state = {
     title: this.props.todo.title,
     _id: this.props.todo._id,
@@ -19,7 +17,6 @@ class TodoForm extends React.Component {
   onSumbit = (e) => {
     e.preventDefault();
     this.props.updateTodo(this.state);
-    todoService.save(this.state);
     this.props.onSetCurrent();
     this.setState({ title: '' });
   };
@@ -53,10 +50,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateTodo: (todo) => dispatch(updateTodo(todo)),
-  };
+const mapDispatchToProps = {
+  updateTodo,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoForm);
+export default connect(mapStateToProps, mapDispatchToProps)(TodoEdit);
